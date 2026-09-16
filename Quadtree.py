@@ -131,10 +131,8 @@ class Quadtree:
         """
         Check if point lies inside this node's region
         """
-        px, py = point
-        x, y, w, h = self.boundary
 
-        return x <= px <= x + w and y <= py <= y + h
+        return self.boundary.isPointInside(point)
 
     def insertInQuadrants(self, point: Point) -> bool:
         """
@@ -156,7 +154,7 @@ class Quadtree:
             return False
 
         # Store locally if capacity not exceeded
-        if len(self.points) < self.capacity and not self.divided:
+        if not self.divided and len(self.points) < self.capacity:
             self.points.append(point)
             return True
 
@@ -209,10 +207,8 @@ class Quadtree:
             result += self.forthQuadrant.query(area)
         else:
             # Check points in this node
-            query_rect = Rectangle(area)
-
             for p in self.points:
-                if query_rect.isPointInside(p):
+                if area.isPointInside(p):
                     result.append(p)
 
         return result

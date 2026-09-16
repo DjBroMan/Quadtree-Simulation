@@ -4,10 +4,13 @@ A Python-based particle simulation using **Quadtree** spatial partitioning for e
 
 ## Features
 
-- **1000+ Moving Particles** with physics-based motion
+- **200 Moving Particles** with physics-based motion
 - **Random Colors** for visual distinction
 - **Wall Collision Detection** with bouncing physics
 - **Quadtree Spatial Partitioning** for optimized collision queries
+- **Two Collision Modes** for comparing direct and quadtree-based detection
+- **Interactive Particle Creation** by clicking in the simulation window
+- **Live HUD** showing FPS, total energy, and ball count
 - **Real-time Visualization** at 60 FPS using Pygame
 
 ## Project Structure
@@ -81,12 +84,19 @@ Run the simulation:
 python main.py
 ```
 
-Close the window to exit.
+Controls:
+- Press `1` to use direct collision checks against every particle.
+- Press `2` to use quadtree-based collision queries.
+- Click anywhere in the window to add a new particle.
+- Close the window to exit.
+
+The simulation displays the quadtree boundaries, current FPS, total particle
+energy, and number of balls in the top-left corner.
 
 ## Configuration
 
 Edit these values in `main.py` to customize the simulation:
-- `NO_OF_PARTICLE`: Number of particles (default: 1000)
+- `NO_OF_PARTICLE`: Initial number of particles (default: 200)
 - `capacity`: Max points per quadtree node (default: 10)
 - `radius`: Particle radius in pixels (default: 5)
 - `max_vel`: Maximum velocity range (default: ±2)
@@ -95,7 +105,7 @@ Edit these values in `main.py` to customize the simulation:
 ## Dependencies
 
 - **pygame**: Graphics rendering and window management
-- **numpy**: (included in requirements, available for future numerical computations)
+- **numpy**: Included in `requirements.txt`, though it is not currently used by the simulation
 
 See `requirements.txt` for exact versions.
 
@@ -108,7 +118,7 @@ This project uses Git for version control. To contribute:
 
 ## Performance Notes
 
-- The Quadtree implementation provides O(log n) average time complexity for spatial queries
-- Rendering 1000+ particles at 60 FPS is CPU-intensive
+- Quadtree queries reduce the number of collision checks compared with checking every particle
+- Rendering many particles at 60 FPS is CPU-intensive
 - Adjust `NO_OF_PARTICLE` if performance is an issue
-- Uncomment `qt.show(screen)` in main.py to visualize the quadtree boundaries (may impact performance)
+- Quadtree boundaries are displayed by default and can be disabled by commenting out `qt.show(screen)` in `main.py`
